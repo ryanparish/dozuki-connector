@@ -1,0 +1,161 @@
+.merge-page {
+  grid-template-rows: auto auto 1fr;
+}
+
+.merge-page .status.error {
+  color: var(--danger);
+}
+
+.topnav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.topnav a {
+  text-decoration: none;
+}
+
+.compare-main {
+  padding: 1rem 1.25rem 2rem;
+  overflow: auto;
+}
+
+.compare-main.hidden {
+  display: none;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.pill {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.pill.match {
+  background: rgba(61, 139, 253, 0.15);
+}
+
+.pill.diff {
+  background: rgba(250, 204, 21, 0.12);
+}
+
+.pill.unique {
+  background: rgba(248, 113, 113, 0.12);
+}
+
+.guide-headers {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.guide-header {
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.guide-header strong {
+  color: var(--accent);
+}
+
+.matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.matrix-row {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  min-height: 4rem;
+  font-size: 0.85rem;
+}
+
+.step-card.empty {
+  opacity: 0.35;
+  border-style: dashed;
+}
+
+.step-card.match {
+  border-color: rgba(61, 139, 253, 0.55);
+}
+
+.step-card.diff {
+  border-color: rgba(250, 204, 21, 0.5);
+}
+
+.step-card.master {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.step-card .meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.step-card .title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.step-card .preview {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.row-label {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.variant-only {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.variant-only.hidden {
+  display: none;
+}
+
+.variant-group {
+  margin-bottom: 1.25rem;
+}
+
+.variant-group h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.variant-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.variant-steps .step-card {
+  flex: 1 1 14rem;
+  max-width: 22rem;
+}

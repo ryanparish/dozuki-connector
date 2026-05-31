@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dozuki Guide Viewer</title>
+    <link rel="stylesheet" href="/app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <h1>Dozuki Guide Viewer</h1>
+        <p class="tagline">Apply the Gibson SWP Word template to Dozuki guide content</p>
+      </div>
+      <nav class="topnav">
+        <a href="/merge.html" class="btn secondary">Guide merge</a>
+        <button type="button" id="toggle-settings" class="btn secondary" aria-expanded="true">
+          Settings
+        </button>
+      </nav>
+    </header>
+
+    <aside id="settings-panel" class="settings open">
+      <form id="settings-form">
+        <label>
+          API key
+          <input
+            type="password"
+            id="api-key"
+            name="apiKey"
+            autocomplete="off"
+            placeholder="Required for private guides"
+          />
+        </label>
+        <label>
+          App ID <span class="hint">(optional)</span>
+          <input type="text" id="app-id" name="appId" autocomplete="off" />
+        </label>
+        <label>
+          Base URL
+          <input
+            type="url"
+            id="base-url"
+            name="baseUrl"
+            required
+            placeholder="https://gp-sandbox.dozuki.com"
+          />
+        </label>
+        <label>
+          Guide ID
+          <input type="number" id="guide-id" name="guideId" min="1" required value="4" />
+        </label>
+        <fieldset class="swp-fields">
+          <legend>SWP export <span class="hint">(header metadata)</span></legend>
+          <label>
+            Document name
+            <input type="text" id="swp-document-name" autocomplete="off" />
+          </label>
+          <label>
+            Document number
+            <input type="text" id="swp-document-number" placeholder="SWP-RMB-…" autocomplete="off" />
+          </label>
+          <label>
+            Department
+            <input type="text" id="swp-department" autocomplete="off" />
+          </label>
+          <label>
+            Author
+            <input type="text" id="swp-author" autocomplete="off" />
+          </label>
+        </fieldset>
+        <div class="checkboxes">
+          <label class="check">
+            <input type="checkbox" id="hydrate" name="hydrate" />
+            Hydrate attached documents
+          </label>
+          <label class="check">
+            <input type="checkbox" id="exclude-prereq" name="excludePrereq" />
+            Exclude prerequisite steps
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary">Load guide</button>
+          <button type="button" id="download-pdf" class="btn secondary">Download PDF</button>
+          <button type="button" id="open-html" class="btn secondary">View HTML</button>
+          <button type="button" id="download-html" class="btn secondary">Download HTML</button>
+          <button type="button" id="clear-key" class="btn ghost">Clear saved key</button>
+        </div>
+        <p class="note">
+          PDF/HTML are generated from your <strong>SWP Word template</strong> (glossary &amp; appendices included).
+          Read-only — edit in Dozuki only. Use <strong>View HTML</strong> (do not paste blob URLs into Google).
+          API key stays in <code>localStorage</code> on this machine.
+        </p>
+      </form>
+    </aside>
+
+    <main class="workspace">
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-view="preview" role="tab">Preview</button>
+        <button type="button" class="tab" data-view="markdown" role="tab">Markdown</button>
+        <button type="button" class="tab" data-view="json" role="tab">JSON</button>
+      </div>
+      <div id="status" class="status" hidden></div>
+      <article id="preview" class="panel prose active" aria-live="polite"></article>
+      <pre id="markdown" class="panel code" hidden></pre>
+      <pre id="json" class="panel code" hidden></pre>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

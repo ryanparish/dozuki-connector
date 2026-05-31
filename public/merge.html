@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guide Merge — Compare</title>
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/merge.css" />
+  </head>
+  <body class="merge-page">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Guide Merge</h1>
+        <p class="tagline">Compare operator observations and plan a master guide</p>
+      </div>
+      <nav class="topnav">
+        <a href="/" class="btn secondary">Viewer</a>
+        <button type="button" id="toggle-settings" class="btn secondary" aria-expanded="true">
+          Settings
+        </button>
+      </nav>
+    </header>
+
+    <aside id="settings-panel" class="settings open">
+      <form id="settings-form">
+        <label>
+          API key
+          <input type="password" id="api-key" autocomplete="off" placeholder="Required for private guides" />
+        </label>
+        <label>
+          App ID <span class="hint">(optional)</span>
+          <input type="text" id="app-id" autocomplete="off" />
+        </label>
+        <label>
+          Base URL
+          <input type="url" id="base-url" required placeholder="https://gp-sandbox.dozuki.com" />
+        </label>
+        <label>
+          Guide IDs <span class="hint">(comma-separated, 2+)</span>
+          <input type="text" id="guide-ids" required placeholder="4, 12, 19" value="4" />
+        </label>
+        <label>
+          Master guide (pivot)
+          <select id="pivot-index">
+            <option value="0">First ID in list</option>
+          </select>
+        </label>
+        <div class="actions">
+          <button type="submit" class="btn primary">Compare guides</button>
+        </div>
+      </form>
+      <p id="status" class="status" role="status"></p>
+    </aside>
+
+    <main id="compare-main" class="compare-main hidden">
+      <section class="legend">
+        <span class="pill match">Aligned — drop replaces master step</span>
+        <span class="pill diff">Differs — review before merge</span>
+        <span class="pill unique">Unique — drop inserts new step</span>
+      </section>
+      <div id="guide-headers" class="guide-headers"></div>
+      <div id="matrix" class="matrix"></div>
+      <section id="variant-only" class="variant-only hidden">
+        <h2>Steps only in a variant</h2>
+        <p class="hint">These did not align to the master sequence. Dragging them in always inserts a new step.</p>
+        <div id="variant-only-list"></div>
+      </section>
+    </main>
+    <script src="/merge.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Loading SWP export…</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 2rem;
+        color: #333;
+      }
+      .err {
+        color: #b00020;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="status">Loading read-only export from Dozuki…</p>
+    <script>
+      const STORAGE_KEY = "dozuki-viewer-settings";
+      const params = new URLSearchParams(location.search);
+      const guideId = params.get("guideId");
+
+      function authHeaders() {
+        let s = {};
+        try {
+          s = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        } catch {
+          /* ignore */
+        }
+        const h = {};
+        if (s.apiKey) h["X-Dozuki-Api-Key"] = s.apiKey;
+        if (s.appId) h["X-Dozuki-App-Id"] = s.appId;
+        if (s.baseUrl) h["X-Dozuki-Base-Url"] = s.baseUrl;
+        return h;
+      }
+
+      if (!guideId) {
+        document.body.innerHTML =
+          '<p class="err">Missing guideId. Open this page from the Dozuki Guide Viewer (View HTML button).</p>';
+      } else {
+        const q = new URLSearchParams(params);
+        q.delete("guideId");
+        q.set("inline", "1");
+        fetch(`/dozuki/${encodeURIComponent(guideId)}/html?${q.toString()}`, {
+          headers: authHeaders(),
+        })
+          .then(async (res) => {
+            const text = await res.text();
+            if (!res.ok) throw new Error(text);
+            return text;
+          })
+          .then((html) => {
+            document.open();
+            document.write(html);
+            document.close();
+          })
+          .catch((err) => {
+            document.body.innerHTML = `<p class="err">${err.message || err}</p>
+<p>Go back to <a href="/">the viewer</a>, enter your API key, and try again.</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>
